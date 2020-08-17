@@ -1,9 +1,9 @@
-FROM postgres:9.6
+FROM postgres:11
 LABEL author="Seo Cahill <seo@seocahill.com>"
 
 # Install patroni and WAL-e
-ENV PATRONIVERSION=1.2.5
-ENV WALE_VERSION=1.0.3
+ENV PATRONIVERSION=1.6-p3
+ENV WALE_VERSION=1.1.1
 
 RUN export DEBIAN_FRONTEND=noninteractive \
     export BUILD_PACKAGES="python3-pip" \
