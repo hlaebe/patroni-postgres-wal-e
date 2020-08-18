@@ -2,7 +2,7 @@ FROM postgres:11
 LABEL author="Seo Cahill <seo@seocahill.com>"
 
 # Install patroni and WAL-e
-ENV PATRONIVERSION=1.6-p3
+ENV PATRONIVERSION=1.6.5
 ENV WALE_VERSION=1.1.1
 
 RUN export DEBIAN_FRONTEND=noninteractive \
@@ -14,13 +14,13 @@ RUN export DEBIAN_FRONTEND=noninteractive \
             # Required for wal-e
             daemontools lzop pv \
             # Required for /usr/local/bin/patroni
-            python3 python3-setuptools python3-pystache python3-prettytable python3-six \
+            python3 python3-setuptools python3-pystache python3-prettytable python3-six python3-psycopg2 \
             ${BUILD_PACKAGES} 
 RUN mkdir -p /home/postgres \
     && chown postgres:postgres /home/postgres 
 RUN apt-get install -y libpq-dev
 RUN pip3 install pip --upgrade \
-    && pip3 install --upgrade patroni==$PATRONIVERSION 
+    && pip3 install --upgrade patroni[etcd]==$PATRONIVERSION 
 RUN pip3 install --upgrade wal-e[aws]==$WALE_VERSION
 
 RUN apt-get purge -y ${BUILD_PACKAGES} \
